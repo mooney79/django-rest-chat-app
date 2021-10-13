@@ -7,6 +7,7 @@ class Msg(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)  #When added
     updated_at = models.DateTimeField(auto_now=True)      #When changed
+    room_assoc = models.CharField(max_length=255)
     
     class Meta:
         ordering = ('-created_at',)
