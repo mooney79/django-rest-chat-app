@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'rest_framework',
     
     #Local
+    'api.apps.ApiConfig',
+    'chatrooms.apps.ChatroomsConfig',
     'frontend.apps.FrontendConfig',
+    'msgs.apps.MsgsConfig',
+
 ]
 
 
