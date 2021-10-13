@@ -1,5 +1,6 @@
-# from django.urls import path, include
+from django.urls import path, include
 
-# urlpatterns = [
-#     path('') # include('msgs.urls'))  #Placeholder for now Needs view, else nothing.
-#]    
+urlpatterns = [
+    path('chat/', include('msgs.urls')),  #Placeholder for now Needs view, else nothing.
+    #path('rooms/', include('chatrooms.urls')),  #Placeholder for now Needs view, else nothing.
+]   
