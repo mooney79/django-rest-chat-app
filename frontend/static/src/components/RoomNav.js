@@ -9,7 +9,7 @@ function RoomNav(props){
     const roomNavButtonHTML = uniqueRooms.map(room => <RoomNavButtons key={room} 
         value={room} setSelection={props.setSelection} selection={props.selection}/>);
     return(
-        <div>
+        <div className="nav-bar">
             {roomNavButtonHTML}
         </div>
     )

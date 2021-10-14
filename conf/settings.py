@@ -25,8 +25,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'django-chat-app-mooney79.herokuapp.com'
-                ]
+ALLOWED_HOSTS = ['127.0.0.1', 'django-chat-app-mooney79.herokuapp.com','localhost']
 
 
 # Application definition
@@ -39,9 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'django.contrib.sites', 
 
     #3rd party
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth.registration',
     
     #Local
     'api.apps.ApiConfig',
@@ -139,3 +145,7 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/static')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
