@@ -1,6 +1,9 @@
-function ChatMessages(){
+function ChatMessages(props){
     return(
-        <div>I'm a message!</div>
+        <div>
+            <span className="user mt-4">{props.user}</span>
+            <p className="message">{props.body}</p>
+        </div>
     )
 }
 
@@ -32,10 +35,5 @@ function MenuItem(props){
 
 export default MenuItem;
 
-//Putting the same item in twice creates two of the same key, since key is based off name
-//So I need to add a quantity aspect as well.
-//Crapstick.
-//I was hoping to avoid that.  Still, it's more professional.
-// https://django-restaurant-api-mooney79.herokuapp.com/api_v1/orders/
 
 */

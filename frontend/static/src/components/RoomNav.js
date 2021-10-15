@@ -8,9 +8,15 @@ function RoomNav(props){
     const uniqueRooms = [...new Set(rooms)];
     const roomNavButtonHTML = uniqueRooms.map(room => <RoomNavButtons key={room} 
         value={room} setSelection={props.setSelection} selection={props.selection}/>);
+    
+    function handleClick(e){
+        console.log('Create a new room dialogue here!') //ADD THIS!
+    }
+
     return(
-        <div className="nav-bar">
+        <div className="nav-bar col-2 btn-group-vertical">
             {roomNavButtonHTML}
+            <button id="new-room" className="nav-button btn new-btn" type="button" key="new_room" onClick={handleClick}> +New+</button>
         </div>
     )
 }

@@ -1,37 +1,30 @@
-import {useState} from 'react'
-import Cookies from 'js-cookie';
+// import {useState} from 'react'
+// import Cookies from 'js-cookie';
+// import App from './../App'
 
 function LoginScreen(props){
-    const [user, setUser] = useState({
-        username: '',
-        password: '',
-    });
+   
 
     // const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setUser(prevState => ({
+        props.setUser(prevState => ({
             ...prevState,
             [name]: value,
         }));
     };
 
-    async function handleSubmit(user){
-        const response = await fetch('127.0.0.1:8000/rest-auth/login/', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': Cookies.get('crftoken')
-          },
-          body: JSON.stringify(user),  
-        })
-        if (!response === true){
-            console.warn(response);
-        } else {
-            const data = await response.json();
-            Cookies.set(`Authorization`, `Token ${data.key}`);
-        }
+    
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.handleLogin(props.user);
+        props.setUser(props.user);
+    }
+
+    function handleClick(e){
+        props.setRegister(true)
     }
        
     return(
@@ -44,7 +37,7 @@ function LoginScreen(props){
                     required
                     name="username" 
                     onChange={handleChange}
-                    value={user.username}
+                    value={props.user.username}
                 />
             </div>
 
@@ -55,12 +48,13 @@ function LoginScreen(props){
                     required
                     name="password" 
                     onChange={handleChange}
-                    value={user.password}
+                    value={props.user.password}
                 />
             </div>
 
            
             <button type="submit" className="btn btn-primary mt-3">Login</button>
+            <button type="button" onClick={handleClick} className="btn btn-primary mt-3">Register</button>
 
         </form>
     )

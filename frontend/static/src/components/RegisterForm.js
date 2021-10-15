@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import Cookies from 'js-cookie';
 
 function RegisterForm(props){
     const [user, setUser] = useState({
@@ -18,14 +19,37 @@ function RegisterForm(props){
         }));
     };
 
+    const handleError = (err) => console.warn(err);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (user.password1 !== user.password2){
             setError('Passwords do not match!');
         } else {
-            props.handleRegistration(user);
+            handleRegistration(user);
         }
     }
+
+    const handleRegistration = async (user) => {
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': Cookies.get('csrftoken')
+          },
+          body: JSON.stringify(user),
+        }
+    
+        const response = await fetch('/rest-auth/registration/', options).catch(handleError);
+        if (!response === true){
+          console.warn(response);
+        } else {
+          const data = await response.json();
+          Cookies.set(`Authorization`, `Token ${data.key}`);
+          props.setRegister(false);
+          props.setLogged(true);
+        }
+      }
 
     return(
         <form className="mt-3" onSubmit={handleSubmit}>
@@ -84,27 +108,4 @@ function RegisterForm(props){
 export default RegisterForm
 
 
-/*
 
-const handleRegistration = async (user) => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': Cookies.get('csrftoken')
-      },
-      body: JSON.stringify(user),
-    }
-
-    const response = await fetch('/rest-auth/registration/', options).catch(handleError);
-    if (!response === true){
-      console.warn(response);
-    } else {
-      const data = await response.json();
-      Cookies.set(`Authorization`, `Token ${data.key}`);
-    }
-  }
-
-
-
-*/

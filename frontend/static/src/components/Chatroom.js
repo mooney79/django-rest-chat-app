@@ -1,48 +1,27 @@
-function Chatroom(){
+import ChatMessages from "./ChatMessages";
+
+function Chatroom(props){
+    // const MessageHTML = props.msgs.map(msg => <ChatMessages key={msg.time_created} {...msg} />);
+    let roomMessages=props.msgs.filter(msg => props.selection === msg.room_assoc);
+    let RoomHTML = roomMessages.map(roomMsg => <ChatMessages key={roomMsg.time_created} {...roomMsg} />);
     return(
-        <div className="chatroom">This is a chatroom.</div>
+        <div className="chatroom col-10">
+            {/* {`Selection =${props.selection}`} */}
+            {/* {MessageHTML} */}
+            {RoomHTML}
+        </div>
     )
 }
 
 export default Chatroom
 
 /*
-So... this is just like Menu, only instead of showing menu items, it will be showing
-messages filtered by which room is currently selected.
-Easy peasy.< /sarcasm>
-
-
-import MenuItem from "./MenuItem";
-
-function MenuList(props){
-
-    // const MenuHTML = props.Menu.map(food => <MenuItem key={food.name} {...food} />);
-
-    let MenuHTML;
-    let shownItems=[{}];
-    if (props.selection === "all"){
-        MenuHTML = props.Menu.map(food => <MenuItem key={food.name} {...food} order={props.order} setOrder={props.setOrder}/>);
-    } 
-    else {
-        shownItems = props.Menu.filter(food => props.selection === food.category);
-
-        MenuHTML = shownItems.map(shownItem => <MenuItem key={shownItem.name} {...shownItem} order={props.order} setOrder={props.setOrder}/>);
-    }
-
-    return (
-        <ul className="mainpane">
-                {MenuHTML}
-        </ul>
-    )
-}
-
-export default MenuList;
-
+To Add--
+--------
+text field/for, to submit new messages
+new room button
+ALL the posts/fetches/puts... etc...
 
 
    
-
-
-
-
 */
