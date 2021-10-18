@@ -8,7 +8,7 @@ User = get_user_model()
 # Create your models here.
 #id?, was_edited?  Don't need was_edited.  Can compare times
 class Msg(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)  
     updated_at = models.DateTimeField(auto_now=True)     
@@ -18,7 +18,7 @@ class Msg(models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.sender
+        return self.text
 
 class Chatroom(models.Model):
     name = models.CharField(max_length=255)

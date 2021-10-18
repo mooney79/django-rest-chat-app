@@ -1,8 +1,37 @@
+import {useEffect, useState, render } from 'react'
+import Cookies from 'js-cookie';
+
 function ChatMessages(props){
+    let poster='nawp';
+
+    // async function fetchPoster(user){
+    //     const response = await fetch(`/rest-auth/user/${user}/`,
+    //     {headers: {
+    //         'Content-Type': 'application/json',
+    //         'X-CSRFToken': Cookies.get('csrftoken')
+    //     }} );    
+    //     if (response.ok){
+    //         const data = await response.json();
+    //         poster = data.username;
+    //         // console.log(data);
+    //         // console.log(poster);        
+    //     } 
+    // }
+
+    // poster = fetchPoster(props.sender);
+  
+    // useEffect(() => {
+    //     console.log(poster)
+    //     },[]);
+
+    //  setTimeout(() => {
+    //      // console.log(props);
+    //      console.log(poster);
+    //  }, 500)
     return(
         <div>
-            <span className="user mt-4">{props.user}</span>
-            <p className="message">{props.body}</p>
+            <p><span className="user mt-4">{props.sender}</span></p>
+            <p className="message">{props.text}</p>
         </div>
     )
 }
@@ -10,30 +39,24 @@ function ChatMessages(props){
 export default ChatMessages
 
 
+
+
+
+
+
+
 /*
 
-// import Order from "./Order";
 
-function MenuItem(props){
-    function handleClick(event){
-        const newOrderItem = {name: props.name, priceStr: props.priceStr, priceCents: props.priceCents, category: props.category};
-        props.setOrder([...props.order, newOrderItem]);
-    }
-    return (
-        <li>
-            <div className="menu-line">
-                <span>{props.name}</span>
-                <div className="line-end">
-                    <span>{props.priceStr}</span>
-                    <button type="button" onClick={handleClick} name={props.name}>+</button>
-                </div>
-            </div>
-            
-        </li>
-    )
-}
-
-export default MenuItem;
-
+{poster}
+  // console.log(props.user)
+    // async function fetchPoster(){
+    //     const response = await fetch(`/admin/auth/user/${props.user}/`)
+    //     if (response.ok){
+    //         const data = await response.json();
+    //         console.log(data);
+    //         // console.warn(xhr.responseText)
+    //     }
+    // }
 
 */

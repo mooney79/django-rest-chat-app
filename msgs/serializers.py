@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import Msg, Chatroom
+from .models import Msg, Chatroom, User
 
 class MsgSerializer(serializers.ModelSerializer):
+    sender=User.username #serializers.CharField()
     class Meta:
         model = Msg
         fields = ('__all__')
@@ -18,8 +19,39 @@ class ChatroomSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('pk', 'username')
+
+
+"""
+from rest_framework import serializers
+from .models import ChatMessage
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+    is_owner = serializers.SerializerMethodField('get_owner_status')
+    owner = serializers.ReadOnlyField(source='username.username')
+    username = serializers.SerializerMethodField('get_username')
+
+    def get_owner_status(self, obj):
+        return obj.username == self.context['request'].user
+
+    def get_username(self, obj):
+        return obj.username.username
+
+    class Meta:
+        model = ChatMessage
+        fields = '__all__'
+        
+        """
+
+# perform create override seria,izer.save user etc...etrc... like yesterday
+
 # class StringListField(serializers.ListField):
 #     child = serializers.CharField()
+
+
 
 # Signature: ListField(child=<A_FIELD_INSTANCE>, allow_empty=True, min_length=None, max_length=None)
 
@@ -72,3 +104,25 @@ class ChatroomSerializer(serializers.ModelSerializer):
 #         queryset = backend().filter_queryset(self.request, queryset, view=self)
 
 #     return queryset
+
+
+"""
+from rest_framework import serializers
+from .models import ChatMessage
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+    is_owner = serializers.SerializerMethodField('get_owner_status')
+    owner = serializers.ReadOnlyField(source='username.username')
+    username = serializers.SerializerMethodField('get_username')
+
+    def get_owner_status(self, obj):
+        return obj.username == self.context['request'].user
+
+    def get_username(self, obj):
+        return obj.username.username
+
+    class Meta:
+        model = ChatMessage
+        fields = '__all__'
+        
+        """

@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from msgs.views import UserDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('frontend.urls')),
     path('api_v1/', include('api.urls')),
     path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/user/<int:pk>/', UserDetail.as_view(), name="user_detail"),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
