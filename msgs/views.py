@@ -5,17 +5,18 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
-class MsgListAPIView(generics.ListCreateAPIView):  #get and post.  What other views do I need?
-    queryset = Msg.objects.all() #later filter by room?  by user?
+class MsgListAPIView(generics.ListCreateAPIView): 
+    queryset = Msg.objects.all() 
     serializer_class = MsgSerializer
 
     def perform_create(self, serializer):
         sender = get_object_or_404(User, id=self.kwargs['pk'])
+        # sender = get_object_or_404(User)
         serializer.save(sender=User)
 
 
-class ChatroomListAPIView(generics.ListCreateAPIView):  #get and post.  What other views do I need?
-    queryset = Chatroom.objects.all() #def need a detail view for this one, right?
+class ChatroomListAPIView(generics.ListCreateAPIView):  
+    queryset = Chatroom.objects.all() 
     serializer_class = ChatroomSerializer
 
 class UserList(generics.ListCreateAPIView):
