@@ -9,10 +9,20 @@ class MsgListAPIView(generics.ListCreateAPIView):
     queryset = Msg.objects.all() 
     serializer_class = MsgSerializer
 
-    def perform_create(self, serializer):
-        sender = get_object_or_404(User, id=self.kwargs['pk'])
-        # sender = get_object_or_404(User)
-        serializer.save(sender=User)
+class MsgDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MsgSerializer
+    
+    def get_queryset(self):
+        id = self.kwargs['pk']
+        return Msg.objects.filter(id=id)
+
+
+
+    # def perform_create(self, serializer):
+    #     sender = get_object_or_404(User, pk=self.kwargs['pk'])
+    #     # sender = get_object_or_404(User)
+    #     serializer.save(sender=User)
+    #Ok... Found it.  This is what was causing my KeyError.
 
 
 class ChatroomListAPIView(generics.ListCreateAPIView):  

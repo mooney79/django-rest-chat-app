@@ -1,12 +1,5 @@
-// import {useState} from 'react'
-// import Cookies from 'js-cookie';
-// import App from './../App'
-
 function LoginScreen(props){
    
-
-    // const [error, setError] = useState(null);
-
     const handleChange = (e) => {
         const {name, value} = e.target;
         props.setUser(prevState => ({
@@ -14,8 +7,6 @@ function LoginScreen(props){
             [name]: value,
         }));
     };
-
-    
 
     const handleSubmit = (e) => {
         e.preventDefault();

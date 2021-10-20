@@ -10,9 +10,10 @@ import InputField from './components/InputField';
 
 function App() {
   const [selection, setSelection] = useState('Home');
-  // const msgs = [{user: 'Sam', time_created: 1, body: "aokeokoeko", room_assoc: "Test"}, {user: 'Sam', time_created: 3, body: "Home, people", room_assoc: "Home"}, {user: 'Sam', time_created: 5, body: "Home, but later", room_assoc: "Home"}]
-  // ^^^ Strictly for testing
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    "pk": 0,
+    "username": "Filler",
+  });
   
   const [logged, setLogged] = useState(false);
   const [register, setRegister] = useState(false);
@@ -23,10 +24,7 @@ function App() {
     const response = await fetch('/api_v1/chat/rooms/')
     if (response.ok){
         const data = await response.json();
-        // console.log(data);
         setRooms(data);
-        // console.log(rooms);
-
     }
 }
 
@@ -34,30 +32,28 @@ function App() {
     const response = await fetch('/api_v1/chat/msgs/');
     if (response.ok){
         const data = await response.json();
-        console.log(data)
         setMsgs(data);
     }
   }
 
   async function fetchUser(){
-    // const pk = fetchUserPK();
-    const response = await fetch(`/rest-auth/user/`);    
+    const response = await fetch(`/rest-auth/user/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      }
+    });    
     if (response.ok){
         const data = await response.json();
         setUser(data);
-        console.log(data);
-        console.log(user)
-        
     }
-}
+  }
 
   const handleLogout = () => {
-    // setUser({});
-    // setUsername("");
-    // setPassword("");
     Cookies.remove('Authorization');
     setLogged(false);
   };
+
   async function handleLogin(user){
     const response = await fetch('/rest-auth/login/', {
       method: 'POST',
@@ -82,13 +78,30 @@ function App() {
     }
 }
 
+
+async function submitMsg(selection, text) {
+  const newMsg = {room_assoc: selection, sender: user.username, text: text };
+  console.log(newMsg);
+  const response = await fetch(`/api_v1/chat/msgs/`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken')
+      },
+      body: JSON.stringify(newMsg),
+  }).catch(console.log('Something went wrong'));
+  if (response.ok){
+        console.log('Message Submitted!');
+        setMsgs([[newMsg], ...msgs]);
+        fetchMsgs()
+  }
+}
+
 useEffect(() => {
   (Cookies.get('Authorization')) ? setLogged(true) : setLogged(false);
   fetchRooms();
   fetchMsgs();
   fetchUser()}, []);
-
-// setInterval(function(){ fetchRooms();fetchMsgs() }, 5000000);
  
 
   if (logged){    
@@ -100,10 +113,10 @@ useEffect(() => {
         </div>
       </div>
       <div className="row">
-        <RoomNav selection={selection} setSelection={setSelection} rooms={rooms}/>
+        <RoomNav selection={selection} setSelection={setSelection} rooms={rooms} setRooms={setRooms} fetchRooms={fetchRooms}/>
         <div className="stacked col-10">
-          <Chatroom msgs={msgs} selection={selection}/>
-          <InputField selection={selection} user={user} msgs={msgs} setMsgs={setMsgs}/>
+          <Chatroom msgs={msgs} setMsgs={setMsgs} selection={selection}/>
+          <InputField selection={selection} user={user} msgs={msgs} setMsgs={setMsgs} submitMsg={submitMsg}/>
         </div>
       </div>
       <button onClick={handleLogout}>logout</button>      

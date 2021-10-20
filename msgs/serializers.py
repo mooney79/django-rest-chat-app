@@ -2,7 +2,9 @@ from rest_framework import serializers
 from .models import Msg, Chatroom, User
 
 class MsgSerializer(serializers.ModelSerializer):
-    sender=User.username #serializers.CharField()
+    #sender=User.username #serializers.CharField()
+    sender = serializers.SlugRelatedField(read_only=False, slug_field="username", queryset = User.objects.all())
+    
     class Meta:
         model = Msg
         fields = ('__all__')

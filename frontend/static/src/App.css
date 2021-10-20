@@ -12,10 +12,14 @@
   margin-left: 16px;
 }
 
-
+*/
 .container{
-  display: flex;
-} */
+  max-height: 100vh;
+} 
+
+li{
+  list-style: none;
+}
 
 .nav-bar{
   display: flex;
@@ -45,6 +49,8 @@ header {
 
 .chatroom{
   border-bottom: 3px black solid;
+  overflow-y: scroll;
+  max-height: 80vh
 }
 
 .new-btn{
